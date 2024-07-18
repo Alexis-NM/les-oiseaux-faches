@@ -13,12 +13,14 @@ public class TouchInput : MonoBehaviour
     private bool isDragging = false;
     private Vector3 lastPosition;
     private Vector3 currentPosition;
+    private Vector2 initialBallPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
         ballRigidbody2D = ball.GetComponent<Rigidbody2D>();
+        initialBallPosition = ballRigidbody2D.position;
         ballSpringJoint2D = ball.GetComponent<SpringJoint2D>();
     }
 
@@ -41,6 +43,7 @@ public class TouchInput : MonoBehaviour
                 Invoke("RemoveSpringJoint", 0.5f);
 
                 isDragging = false;
+                Invoke("RestartBall", 5f);
             }
             return;
         }
@@ -78,6 +81,13 @@ public class TouchInput : MonoBehaviour
     // Méthode pour supprimer le SpringJoint2D
     void RemoveSpringJoint()
     {
-        Destroy(ballSpringJoint2D);
+        ballSpringJoint2D.enabled = false;
+    }
+
+    private void RestartBall()
+    {
+        ballRigidbody2D.position = initialBallPosition;
+        ballSpringJoint2D.enabled = true;
+        ballRigidbody2D.velocity = Vector2.zero;
     }
 }
