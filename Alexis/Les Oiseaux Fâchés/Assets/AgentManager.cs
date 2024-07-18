@@ -26,6 +26,7 @@ public class AgentManager : MonoBehaviour
         Rotate(agent1, changeSpeed / 5);
         agent2.GetComponent<SpriteRenderer>().material.color = GetSinCosColor(changeSpeed / 2);
         PushUp(agent3.GetComponent<Rigidbody2D>(), 1);
+        
     }
 
     // Rotate on Z axis by a given speed
